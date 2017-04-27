@@ -44,8 +44,9 @@ router.get(consts.acts_path(), function (req, res) {
     const id = shortid.generate()
     accountsState[id] = req.body
 
-    res.set("Location", req.body.url)
-    res.status(HttpStatus.CREATED).send(actMeta({[consts.ACT_ID]: id}))
+    const act = actMeta({[consts.ACT_ID]: id})
+    res.set("Location", act.url)
+    res.status(HttpStatus.CREATED).send(act)
 }).get(consts.act_path(), function (req, res) {
     res.send(actMeta({[consts.ACT_ID]: req.params[consts.ACT_ID]}))
 }).post(consts.act_pre_withdrawal_path(), function (req, res) {
@@ -61,8 +62,10 @@ router.get(consts.acts_path(), function (req, res) {
                 act.balance = act.balance - amt
                 if (!act.pwds) act.pwds = {}
                 act.pwds[id] = amt
-                res.set("Location", req.body.url)
-                res.status(HttpStatus.CREATED).send(pwdMeta({[consts.ACT_ID]: actId, [consts.PRE_WITHDRAWAL_ID]: id}))
+
+                const pwd = pwdMeta({[consts.ACT_ID]: actId, [consts.PRE_WITHDRAWAL_ID]: id})
+                res.set("Location", pwd.url)
+                res.status(HttpStatus.CREATED).send(pwd)
             } else {
                 res.status(HttpStatus.NOT_ACCEPTABLE).end()
             }
@@ -88,8 +91,10 @@ router.get(consts.acts_path(), function (req, res) {
 
             if (!act.deposits) act.deposits = {}
             act.deposits[id] = amt
-            res.set("Location", req.body.url)
-            res.status(HttpStatus.CREATED).send(depositMeta({[consts.ACT_ID]: actId, [consts.PRE_DEPOSIT_ID]: id}))
+
+            const deposit = depositMeta({[consts.ACT_ID]: actId, [consts.PRE_DEPOSIT_ID]: id})
+            res.set("Location", deposit.url)
+            res.status(HttpStatus.CREATED).send(deposit)
         } else {
             res.status(HttpStatus.UNPROCESSABLE_ENTITY).end()
         }
