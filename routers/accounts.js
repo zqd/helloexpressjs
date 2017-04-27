@@ -64,10 +64,10 @@ router.get(consts.acts_path(), function (req, res) {
                 res.set("Location", req.body.url)
                 res.status(HttpStatus.CREATED).send(pwdMeta({[consts.ACT_ID]: actId, [consts.PRE_WITHDRAWAL_ID]: id}))
             } else {
-                res.status(HttpStatus.NOT_ACCEPTABLE)
+                res.status(HttpStatus.NOT_ACCEPTABLE).end()
             }
         } else {
-            res.status(HttpStatus.UNPROCESSABLE_ENTITY)
+            res.status(HttpStatus.UNPROCESSABLE_ENTITY).end()
         }
     }
 }).get(consts.act_pre_withdrawal_with_id_path(), function (req, res) {
@@ -91,7 +91,7 @@ router.get(consts.acts_path(), function (req, res) {
             res.set("Location", req.body.url)
             res.status(HttpStatus.CREATED).send(depositMeta({[consts.ACT_ID]: actId, [consts.PRE_DEPOSIT_ID]: id}))
         } else {
-            res.status(HttpStatus.UNPROCESSABLE_ENTITY)
+            res.status(HttpStatus.UNPROCESSABLE_ENTITY).end()
         }
     }
 }).get(consts.act_pre_deposit_with_id_path(), function (req, res) {
@@ -119,15 +119,15 @@ router.get(consts.acts_path(), function (req, res) {
                     act.balance = act.balance + act.deposits[depositId]
                 }
                 delete act.deposits[depositId]
-                res.status(HttpStatus.OK)
+                res.status(HttpStatus.OK).end()
             } else {
-                res.status(HttpStatus.NOT_ACCEPTABLE)
+                res.status(HttpStatus.NOT_ACCEPTABLE).end()
             }
         } else {
-            res.status(HttpStatus.OK)
+            res.status(HttpStatus.OK).end()
         }
     } else {
-        res.status(HttpStatus.PRECONDITION_FAILED)
+        res.status(HttpStatus.PRECONDITION_FAILED).end()
     }
 }).put(consts.act_pre_withdrawal_with_id_path(), function (req, res) {
     const actId = req.params[consts.ACT_ID]
@@ -143,15 +143,15 @@ router.get(consts.acts_path(), function (req, res) {
                     act.balance = act.balance + act.pwds[pwdId]
                 }
                 delete act.pwds[pwdId]
-                res.status(HttpStatus.OK)
+                res.status(HttpStatus.OK).end()
             } else {
-                res.status(HttpStatus.NOT_ACCEPTABLE)
+                res.status(HttpStatus.NOT_ACCEPTABLE).end()
             }
         } else {
-            res.status(HttpStatus.OK)
+            res.status(HttpStatus.OK).end()
         }
     } else {
-        res.status(HttpStatus.PRECONDITION_FAILED)
+        res.status(HttpStatus.PRECONDITION_FAILED).end()
     }
 })
 
