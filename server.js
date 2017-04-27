@@ -8,26 +8,16 @@
 const express = require('express')
 const app = express()
 const route = express.Router()
+const route1 = express.Router()
 
-const nameRoute = route.get("/:name",function (req, res) {
+
+route1.get("/:name", function (req, res) {
     console.log(req.params)
-    req.send("hello")
+    res.send("this is route1")
 })
 
-route.get("/:id",nameRoute)
+route.get("/:id", route1)
 
-app.use("/",route)
-
-// app.get('/', function (req, res) {
-//     res.send('Hello World')
-// })
-
-// const route1 = express.Router()
-// route1.get("/:id",function (req, res) {
-//     console.log(req.params)
-//     res.send("this is route1")
-// })
-//
-// app.use(route1)
+app.use("/", route)
 
 app.listen(3000)
