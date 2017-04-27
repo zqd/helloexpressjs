@@ -6,18 +6,17 @@
  * <文件描述>
  */
 const express = require('express')
+const bodyParsers = require('body-parser')
 const app = express()
 const route = express.Router()
-const route1 = express.Router()
 
-
-route1.get("/:name", function (req, res) {
-    console.log(req.params)
-    res.send("this is route1")
+route.post("/acts",function (req, res) {
+    console.log(req.body)
+    res.send({actID:"1",url:"/acts/1"})
 })
 
-route.get("/:id", route1)
+app.use(bodyParsers.json())
 
-app.use("/", route)
+app.use(route)
 
 app.listen(3000)

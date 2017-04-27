@@ -8,7 +8,6 @@
 const express = require('express')
 const app = express()
 const compression = require('compression')
-const fs = require('fs')
 
 app.use(compression({filter: shouldCompress}))
 
@@ -22,5 +21,11 @@ function shouldCompress (req, res) {
 }
 
 app.get('/', function (req, res) {
-    res.send('hello world')
+    var s = "hello world"
+    for(var i=0 ;i<200;i++){
+        s = s + "hello world"
+    }
+    res.send(s)
 })
+
+app.listen(3000)
