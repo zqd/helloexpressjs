@@ -7,13 +7,8 @@
  */
 const express = require('express')
 const bodyParsers = require('body-parser')
+const route = require('./routers')
 const app = express()
-const route = express.Router()
-
-route.post("/acts",function (req, res) {
-    console.log(req.body)
-    res.send({actID:"1",url:"/acts/1"})
-})
 
 app.use(bodyParsers.json())
 

@@ -5,6 +5,7 @@
     "compression": "^1.6.2",
     "express": "^4.15.2",
     "http-status-codes": "^1.1.6",
+    "path-to-regexp": "^1.7.0",
     "shortid": "^2.2.8"
   }
 }
