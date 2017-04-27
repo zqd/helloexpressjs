@@ -53,7 +53,7 @@ router.get(consts.acts_path(), function (req, res) {
     const actId = req.params[consts.ACT_ID]
     const amtKey = "amt"
     if (actId && actId in accountsState) {
-        if (amtKey in creq.body && Number.isInteger(req.body[amtKey])) {
+        if (amtKey in req.body && Number.isInteger(req.body[amtKey])) {
             const act = accountsState[actId]
             const amt = req.body[amtKey]
             if (act.balance > amt) {
