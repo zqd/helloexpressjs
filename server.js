@@ -10,6 +10,7 @@ const bodyParsers = require('body-parser')
 const route = require('./routers')
 const app = express()
 const compression = require('compression')
+const expressValidator = require('express-validator')
 
 app.use(compression({filter: shouldCompress}))
 
@@ -22,6 +23,7 @@ function shouldCompress (req, res) {
 }
 
 app.use(bodyParsers.json())
+app.use(expressValidator())
 
 app.use(route)
 
