@@ -7,19 +7,15 @@
  */
 const shortid = require('shortid')
 const HttpStatus = require('http-status-codes')
-const pathToRegexp = require('path-to-regexp')
 const consts = require("../routers/constants")
-
-const toActPath = pathToRegexp.compile(consts.act_path())
-const toActQueryPath = pathToRegexp.compile(consts.act_query_path())
-const toPreWithdrawalsPath = pathToRegexp.compile(consts.act_pre_withdrawal_path())
-const toPreDepositPath = pathToRegexp.compile(consts.act_pre_deposit_path())
+const pathUtil = require('../../pathUtil')
 
 const actMeta = params => ({
-    url: toActPath(params),
-    query_path: toActQueryPath(params),
-    pre_withdrawals_path: toPreWithdrawalsPath(params),
-    pre_deposit_path: toPreDepositPath(params)
+
+    url: pathUtil(consts.act_path())(params),
+    query_path: pathUtil(consts.act_query_path())(params),
+    pre_withdrawals_path: pathUtil(consts.act_pre_withdrawal_path())(params),
+    pre_deposit_path: pathUtil(consts.act_pre_deposit_path())(params)
 })
 
 module.exports = accountsState => (req,res)=>{

@@ -7,7 +7,9 @@
  */
 module.exports = path => params => {
     for(const p in params){
-        path = path.replace(":"+p,params[p])
-    }
+        if(params.hasOwnProperty(p)){
+            path = path.replace(":"+p,params[p])
+        }
+     }
     return path
 }
