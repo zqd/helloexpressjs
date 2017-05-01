@@ -14,7 +14,7 @@ const expressValidator = require('express-validator')
 
 app.use(compression({filter: shouldCompress}))
 
-function shouldCompress (req, res) {
+function shouldCompress(req, res) {
     if (req.headers['x-no-compression']) {
         return false
     }

@@ -7,8 +7,9 @@
  */
 const shortid = require('shortid')
 const HttpStatus = require('http-status-codes')
-const consts = require("../routers/constants")
+const consts = require("../constants")
 const pathUtil = require('../../pathUtil')
+const accountsState = require('../test_accounts')
 
 const actMeta = params => ({
 
@@ -18,7 +19,7 @@ const actMeta = params => ({
     pre_deposit_path: pathUtil(consts.act_pre_deposit_path())(params)
 })
 
-module.exports = accountsState => (req,res)=>{
+module.exports = (req,res)=>{
     const id = shortid.generate()
 
     accountsState[id] = req.body

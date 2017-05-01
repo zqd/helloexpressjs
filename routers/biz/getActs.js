@@ -5,7 +5,7 @@
  * Why & What is modified  <修改原因描述>
  * <文件描述>
  */
-const consts = require("../routers/constants")
+const consts = require("../constants")
 
 const actsMeta = {
     create_act: consts.acts_path()

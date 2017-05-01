@@ -5,7 +5,7 @@
  * Why & What is modified  <修改原因描述>
  * <文件描述>
  */
-const consts = require("../routers/constants")
+const consts = require("../constants")
 const pathToRegexp = require('path-to-regexp')
 
 const toPreWithdrawalsPath = pathToRegexp.compile(consts.act_pre_withdrawal_path())

@@ -5,10 +5,11 @@
  * Why & What is modified  <修改原因描述>
  * <文件描述>
  */
-const consts = require("../routers/constants")
+const consts = require("../constants")
 const HttpStatus = require('http-status-codes')
+const accountsState = require('../test_accounts')
 
-module.exports = accountsState => (req, res) => {
+module.exports = (req, res) => {
     const actId = req.params[consts.ACT_ID]
     const depositId = req.params[consts.PRE_DEPOSIT_ID]
     const typeKey = "type"

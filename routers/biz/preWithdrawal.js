@@ -8,7 +8,8 @@
 const shortid = require('shortid')
 const HttpStatus = require('http-status-codes')
 const pathToRegexp = require('path-to-regexp')
-const consts = require("../routers/constants")
+const consts = require("../constants")
+const accountsState = require('../test_accounts')
 
 const toPreWithdrawalsWithIdPath = pathToRegexp.compile(consts.act_pre_withdrawal_with_id_path())
 
@@ -16,7 +17,7 @@ const pwdMeta = params => ({
     confirm_path: toPreWithdrawalsWithIdPath(params)
 })
 
-module.exports = accountsState => (req, res) => {
+module.exports =(req, res) => {
     const actId = req.params[consts.ACT_ID]
     const amtKey = "amt"
     if (actId && actId in accountsState) {
