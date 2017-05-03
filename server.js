@@ -7,10 +7,13 @@
  */
 const express = require('express')
 const bodyParsers = require('body-parser')
-const route = require('./routers')
+// const route = require('./routers')
 const app = express()
 const compression = require('compression')
 const expressValidator = require('express-validator')
+const makeRouter = require('./makeRouter')
+const actConfig = require('./act/config')
+const tree = require('./tree')
 
 app.use(compression({filter: shouldCompress}))
 
@@ -25,6 +28,6 @@ function shouldCompress(req, res) {
 app.use(bodyParsers.json())
 app.use(expressValidator())
 
-app.use(route)
+app.use(makeRouter(actConfig.peek()))
 
 app.listen(3000)
