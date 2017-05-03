@@ -9,5 +9,5 @@ module.exports = {
     ACT:'act',
     PRE_WITHDRAWALS:'pwd',
     PRE_DEPOSIT :'dpst',
-    ID:'Id',
+    ID: 'Id'
 }

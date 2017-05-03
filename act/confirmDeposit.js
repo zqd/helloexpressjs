@@ -6,7 +6,7 @@
  * <文件描述>
  */
 const consts = require("../routers/constants")
-const accountsState = require('../test_accounts')
+const accountsState = require('../routers/test_accounts')
 
 module.exports = (obj) => {
     const actId = obj[consts.ACT_ID]

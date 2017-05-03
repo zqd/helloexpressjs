@@ -17,13 +17,14 @@ const pwdSchema = require('./validator/pwdSchema')
 const dpstSchema = require('./validator/dpstSchema')
 const confirmDpstSchema = require('./validator/confirmDpstSchema')
 const confirmPwdSchema = require('./validator/confirmPwdSchema')
-const consts = require('./constants')
+const consts = require('../constants')
 
 const act = {
     name: 'act',
-    existRes: (params) => {
+    existRes: function (params) {
         //TODO 消除字符串-未完成！！！
-        const actId = params[consts.ACT + consts.ID]
+        const act = `${this.name + consts.ID}`
+        const actId = params[act]
         return actId in accountsState
     },
     createHandle: actCreateHandle,
@@ -36,18 +37,18 @@ const pwd = {
     name: 'pwd',
     existRes: () => true,
     createHandle: pwdCreateHandle,
-    createHandleValidator:pwdSchema,
+    createHandleValidator: pwdSchema,
     putHandle: pwdPutHandle,
-    putHandleValidator:confirmPwdSchema
+    putHandleValidator: confirmPwdSchema
 }
 
 const dpst = {
     name: 'dpst',
     existRes: () => true,
     createHandle: dpstCreateHandle,
-    createHandleValidator:dpstSchema,
+    createHandleValidator: dpstSchema,
     putHandle: dpstPutHandle,
-    putHandleValidator:confirmDpstSchema
+    putHandleValidator: confirmDpstSchema
 }
 
 tree(act, () => {
