@@ -62,7 +62,8 @@ function configRouter(bucketPath, resPath, bucketMeta, resMeta, props, parentPro
         .post(bucketPath, validator(props.createHandleValidator), resultProc(props.createHandle),
             (req, res) => res.status(HttpStatus.CREATED).send(getMeta(Object.assign({[getIdName(props.name)]: req.retVal}, req.params), resMeta)))
     router.get(resPath, resultProc(props.existRes), (req, res) => res.send(getMeta(req.params, resMeta)))
-        .put(resPath, validator(props.putHandleValidator), resultProc([props.existRes, props.putHandle]))
+        .put(resPath, validator(props.putHandleValidator), resultProc([props.existRes, props.putHandle]),
+            (req, res) => res.status(HttpStatus.OK).end())
 }
 
 function makeRouterBuilder(router) {

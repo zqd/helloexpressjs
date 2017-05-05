@@ -15,7 +15,7 @@ const act = {
     },
     createHandle: async ({params, body}) => {
         const id = shortid.generate()
-        state[id] = {balance: params.balance}
+        state[id] = {balance: body['balance']}
         return id
     },
     createHandleValidator: {
@@ -42,10 +42,10 @@ const pwd = {
         if (!state[actId].pwds) {
             state[actId].pwds = {}
         }
-        if (state[actId].balance < params['amt'])
+        if (state[actId].balance < body['amt'])
             throw new Error({status: HttpStatus.NOT_ACCEPTABLE})
-        state[actId].balance -= params['amt']
-        state[actId].pwds[id] = params['amt']
+        state[actId].balance -= body['amt']
+        state[actId].pwds[id] = body['amt']
         return id
     },
     createHandleValidator: {
@@ -62,12 +62,11 @@ const pwd = {
         const pwdId = params['pwdId']
 
         const act = state[actId]
-        console.log(act)
         const type = body['type']
         if (!type) {
-            act.balance = act.balance + act.pwds[pwdId]
+            state[actId].balance = state[actId].balance + state[actId].pwds[pwdId]
         }
-        delete act.pwds[pwdId]
+        delete state[actId].pwds[pwdId]
     },
     putHandleValidator: {
         'type': {
