@@ -10,47 +10,81 @@ const act = {
     name: 'act',
     existRes: async ({params, body}) => {
         if (!(params['actId'] in state)) {
-            throw new Error({ status: HttpStatus.NOT_FOUNT })
+            throw {status: HttpStatus.NOT_FOUND}
         }
     },
-    createHandle: async params => {
+    createHandle: async ({params, body}) => {
         const id = shortid.generate()
-        state[id] = { balance: params.balance }
+        state[id] = {balance: params.balance}
         return id
     },
-    putHandle: undefined
+    createHandleValidator: {
+        'balance': {
+            in: 'body',
+            notEmpty: true,
+            isInt: {
+                errorMessage: "not is int"
+            }
+        }
+    }
 }
 
 const pwd = {
     name: 'pwd',
-    existRes: async params => {
-        if (!(params['actId'] in state) || !(params['pwdId'] in state[params['actId']])) {
-            throw new Error({ status: HttpStatus.NOT_FOUNT })
+    existRes: async ({params, body}) => {
+        if (!(params['actId'] in state) || !(params['pwdId'] in state[params['actId']].pwds)) {
+            throw {status: HttpStatus.NOT_FOUND}
         }
     },
-    createHandle: async params => {
+    createHandle: async ({params, body}) => {
         const id = shortid.generate()
         const actId = params['actId']
         if (!state[actId].pwds) {
-            state[actId] = {}
+            state[actId].pwds = {}
         }
-        if(state[actId] < params['amt'])
+        if (state[actId].balance < params['amt'])
             throw new Error({status: HttpStatus.NOT_ACCEPTABLE})
         state[actId].balance -= params['amt']
-        state[actId][id] = params['amt']
+        state[actId].pwds[id] = params['amt']
         return id
     },
-    putHandle: async params => {
+    createHandleValidator: {
+        'amt': {
+            in: 'body',
+            notEmpty: true,
+            isInt: {
+                errorMessage: "not is int"
+            }
+        }
+    },
+    putHandle: async ({params, body}) => {
+        const actId = params['actId']
+        const pwdId = params['pwdId']
 
-    }
-
+        const act = state[actId]
+        console.log(act)
+        const type = body['type']
+        if (!type) {
+            act.balance = act.balance + act.pwds[pwdId]
+        }
+        delete act.pwds[pwdId]
+    },
+    putHandleValidator: {
+        'type': {
+            in: 'body',
+            notEmpty: true,
+            isBoolean: {
+                errorMessage: "not is boolean"
+            }
+        }
+    },
 }
 
 const dpst = {
     name: 'dpst',
-    existRes: async() => true,
-    createHandle: async() => console.log(this.name),
-    putHandle: async() => console.log(this.name)
+    existRes: async () => true,
+    createHandle: async () => console.log(this.name),
+    putHandle: async () => console.log(this.name)
 }
 
 tree(act, () => {
@@ -58,9 +92,7 @@ tree(act, () => {
     tree(dpst)
 })
 
-// printPath(tree.peek())
-const express = require('express')
-const router = express.Router()
-make(tree.peek(), router)
-
-module.exports = router
+module.exports = function (router) {
+    make(tree.peek(), router)
+    return router
+}

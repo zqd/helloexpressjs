@@ -28,6 +28,7 @@ function shouldCompress(req, res) {
 app.use(bodyParsers.json())
 app.use(expressValidator())
 
-app.use(makeRouter)
+const router = express.Router()
+app.use(makeRouter(router))
 
 app.listen(3000)
