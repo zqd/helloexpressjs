@@ -12,6 +12,8 @@ const pathUtil = require('./pathUtil')
 const validator = require('./act/validator/validator')
 const consts = require('./constants')
 
+
+//TODO 没有promise，没有抽象好函数：桶和资源的角度。不利于扩展。printPath变换很难替换makeRouter
 // 首字母大写
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1)
@@ -47,7 +49,7 @@ function makeRouter(tree) {
 const barrelRoute = route => (path, meta) => node => {
     route.get(path, (req, res) => {
         const temp = Object.assign({}, meta)
-        for (const i in temp) {
+        for (let i in temp) {
             temp[i] = pathUtil(temp[i])(req.params)
         }
         res.send(temp)
@@ -59,6 +61,7 @@ const barrelRoute = route => (path, meta) => node => {
         const temp = Object.assign({}, meta)
         temp.resPath = `${tempPath}/${rs.id}`
         temp.url = tempPath
+        console.log("")
 
         if (rs.isSuccess)
             res.status(HttpStatus.CREATED).send(temp)
@@ -69,9 +72,9 @@ const barrelRoute = route => (path, meta) => node => {
 
 const resRoute = route => (path, meta) => node => {
     route.get(path, (req, res) => {
-        if (node.value.existRes(req.params)) {
+         if (node.value.existRes(req.params)) {
             const temp = Object.assign({}, meta)
-            for (const i in temp) {
+            for (let i in temp) {
                 temp[i] = pathUtil(temp[i])(req.params)
             }
             res.send(temp)

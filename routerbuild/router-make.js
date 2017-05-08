@@ -47,7 +47,7 @@ function resultProc(handle) {
 
 function getMeta(params, template) {
     let v = template
-    for (const k in params) {
+    for (let k in params) {
         const reg = new RegExp(`\/:${k}(?=$|\/)`, 'g')
         for (const i in v) {
             v[i] = v[i].replace(reg, '/' + params[k])
